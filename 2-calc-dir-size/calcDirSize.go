@@ -9,7 +9,7 @@ import (
 
 var size int64
 
-func getDirectory (inputArgs [] string) string {
+func getDirectory(inputArgs []string) string {
 	if len(inputArgs) > 0 {
 		return inputArgs[0]
 	} else {
@@ -18,7 +18,7 @@ func getDirectory (inputArgs [] string) string {
 	}
 }
 
-func getListOfFilesInDir (dirAdd string) [] string {
+func getListOfFilesInDir(dirAdd string) []string {
 	dirFile, _ := os.Open(dirAdd)
 
 	dirFileNames, _ := dirFile.Readdirnames(-1)
@@ -26,9 +26,9 @@ func getListOfFilesInDir (dirAdd string) [] string {
 }
 
 /** calcSize (add) => if add is File then size += add.Size
-					  else if add is a Directory => for each file in add calcSize
+  else if add is a Directory => for each file in add calcSize
 */
-func calcSize (currentPath string) {
+func calcSize(currentPath string) {
 	fileInfo, _ := os.Lstat(currentPath)
 	fileModeStr := string(fileInfo.Mode().String()[0])
 	if strings.Contains(fileModeStr, "l") {
@@ -37,7 +37,7 @@ func calcSize (currentPath string) {
 	if fileInfo.IsDir() {
 
 		dirFilesList := getListOfFilesInDir(currentPath)
-		for _,value := range dirFilesList {
+		for _, value := range dirFilesList {
 			calcSize(currentPath + "/" + value)
 		}
 	} else { // currentPath is a File so just add its size
